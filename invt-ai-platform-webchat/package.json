@@ -1,0 +1,19 @@
+{
+  "name": "@invt/webchat",
+  "version": "1.1.0-SNAPSHOT",
+  "description": "Invt WebChat embeddable widget",
+  "type": "module",
+  "main": "dist/invt-ai-platform-webchat.umd.js",
+  "module": "dist/invt-ai-platform-webchat.es.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && cp -r dist/ ../invt-ai-platform-server/src/main/resources/static/webchat/",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5",
+    "typescript": "^5.8.3"
+  }
+}
