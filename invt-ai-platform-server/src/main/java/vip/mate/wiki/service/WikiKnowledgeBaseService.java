@@ -118,6 +118,27 @@ public class WikiKnowledgeBaseService {
     }
 
     /**
+     * 列出当前用户在工作区里"可见"的知识库：公共知识库（visibility='PUBLIC'）
+     * 全员可见；个人知识库（visibility='PRIVATE'）仅对创建者本人可见。
+     * <p>
+     * 这是知识库列表页的可见性语义，也是"个人/公共"Tab 过滤的数据来源 ——
+     * 请求方只需再按 {@code visibility} 字段客户端分组即可。
+     * <p>
+     * {@code userId} 为 null 时（理论上不会发生，listKBs 已要求认证），退化到
+     * 仅返回公共知识库，绝不泄露他人私密库。
+     */
+    public List<WikiKnowledgeBaseEntity> listVisibleByWorkspace(Long workspaceId, Long userId) {
+        return kbMapper.selectList(
+                new LambdaQueryWrapper<WikiKnowledgeBaseEntity>()
+                        .eq(WikiKnowledgeBaseEntity::getWorkspaceId, workspaceId)
+                        .orderByDesc(WikiKnowledgeBaseEntity::getUpdateTime))
+                .stream()
+                .filter(kb -> "PUBLIC".equals(kb.getVisibility())
+                        || (userId != null && userId.equals(kb.getCreatorId())))
+                .toList();
+    }
+
+    /**
      * 获取 Agent 可访问的知识库。
      * <p>
      * Knowledge bases are workspace-shared, so the baseline visible set is
@@ -282,17 +303,32 @@ public class WikiKnowledgeBaseService {
 
     @Transactional
     public WikiKnowledgeBaseEntity create(String name, String description, Long agentId, Long workspaceId) {
+        return create(name, description, agentId, workspaceId, null, "PUBLIC");
+    }
+
+    /**
+     * Create a knowledge base with ownership.
+     *
+     * @param creatorId   owning user (个人知识库的创建者); null = unowned / public
+     * @param visibility  'PUBLIC' (workspace shared) or 'PRIVATE' (creator only)
+     */
+    @Transactional
+    public WikiKnowledgeBaseEntity create(String name, String description, Long agentId, Long workspaceId,
+                                          Long creatorId, String visibility) {
         WikiKnowledgeBaseEntity entity = new WikiKnowledgeBaseEntity();
         entity.setName(name);
         entity.setDescription(description);
         entity.setAgentId(agentId);
         entity.setWorkspaceId(workspaceId);
+        entity.setCreatorId(creatorId);
+        entity.setVisibility(visibility == null || visibility.isBlank() ? "PUBLIC" : visibility);
         entity.setConfigContent(DEFAULT_CONFIG);
         entity.setStatus("active");
         entity.setPageCount(0);
         entity.setRawCount(0);
         kbMapper.insert(entity);
-        log.info("[Wiki] Knowledge base created: id={}, name={}, workspaceId={}", entity.getId(), name, workspaceId);
+        log.info("[Wiki] Knowledge base created: id={}, name={}, workspaceId={}, creatorId={}, visibility={}",
+                entity.getId(), name, workspaceId, creatorId, entity.getVisibility());
         // RFC-051 PR-2: ensure overview / log system pages exist for every new KB.
         if (scaffoldService != null) {
             scaffoldService.ensureScaffold(entity.getId());

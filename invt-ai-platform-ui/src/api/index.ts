@@ -763,7 +763,7 @@ export const wikiApi = {
   getKB: (id: string | number) => http.get(`/wiki/knowledge-bases/${id}`),
   listKBsByAgent: (agentId: string | number) => http.get(`/wiki/knowledge-bases/agent/${agentId}`),
   listBindableKBs: () => http.get('/wiki/knowledge-bases/bindable'),
-  createKB: (data: { name: string; description?: string; agentId?: string | number }) =>
+  createKB: (data: { name: string; description?: string; agentId?: string | number; visibility?: 'PUBLIC' | 'PRIVATE' }) =>
     http.post('/wiki/knowledge-bases', data),
   updateKB: (id: string | number, data: { name?: string; description?: string; embeddingModelId?: string | number | null }) =>
     http.put(`/wiki/knowledge-bases/${id}`, data),

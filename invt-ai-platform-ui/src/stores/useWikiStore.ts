@@ -14,6 +14,10 @@ export interface WikiKB {
   rawCount: number
   createTime: string
   updateTime: string
+  /** 创建者用户 ID（个人知识库的拥有者）。NULL = 非个人创建。 */
+  creatorId: number | null
+  /** 归属范围：PUBLIC（公共/工作区共享） / PRIVATE（个人，仅创建者可见）。 */
+  visibility: 'PUBLIC' | 'PRIVATE'
 }
 
 export interface WikiRawMaterial {
@@ -228,7 +232,7 @@ export const useWikiStore = defineStore('wiki', () => {
     }
   }
 
-  async function createKB(data: { name: string; description?: string; agentId?: number }) {
+  async function createKB(data: { name: string; description?: string; agentId?: number; visibility?: 'PUBLIC' | 'PRIVATE' }) {
     const res: any = await wikiApi.createKB(data)
     const kb = res.data || res
     knowledgeBases.value.unshift(kb)

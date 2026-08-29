@@ -30,6 +30,29 @@
           <label>{{ t('wiki.kbDescription') }}</label>
           <textarea v-model="newKBDesc" class="form-input" rows="3" :placeholder="t('wiki.kbDescPlaceholder')"></textarea>
         </div>
+        <div class="form-group">
+          <label>{{ t('wiki.scopeLabel') }}</label>
+          <div class="scope-options">
+            <label
+              class="scope-option"
+              :class="{ 'scope-option--active': newKBVisibility === 'PUBLIC' }"
+            >
+              <input v-model="newKBVisibility" type="radio" value="PUBLIC" class="scope-option-input" />
+              <span class="scope-option-dot"></span>
+              <span class="scope-option-label">{{ t('wiki.tabPublic') }}</span>
+              <span class="scope-option-hint">{{ t('wiki.library.scopePublicHint') }}</span>
+            </label>
+            <label
+              class="scope-option"
+              :class="{ 'scope-option--active': newKBVisibility === 'PRIVATE' }"
+            >
+              <input v-model="newKBVisibility" type="radio" value="PRIVATE" class="scope-option-input" />
+              <span class="scope-option-dot"></span>
+              <span class="scope-option-label">{{ t('wiki.tabPersonal') }}</span>
+              <span class="scope-option-hint">{{ t('wiki.library.scopePrivateHint') }}</span>
+            </label>
+          </div>
+        </div>
         <div class="modal-actions">
           <button class="btn-secondary" @click="showCreateKB = false">{{ t('common.cancel') }}</button>
           <button class="btn-primary" @click="handleCreateKB" :disabled="!newKBName.trim()">{{ t('common.create') }}</button>
@@ -81,6 +104,7 @@ watch(() => store.knowledgeBases.length, () => {
 const showCreateKB = ref(false)
 const newKBName = ref('')
 const newKBDesc = ref('')
+const newKBVisibility = ref<'PUBLIC' | 'PRIVATE'>('PUBLIC')
 
 async function enterKB(id: number) {
   await store.selectKB(id, 'browse')
@@ -91,10 +115,11 @@ async function enterKBManage(id: number) {
 }
 
 async function handleCreateKB() {
-  await store.createKB({ name: newKBName.value, description: newKBDesc.value })
+  await store.createKB({ name: newKBName.value, description: newKBDesc.value, visibility: newKBVisibility.value })
   showCreateKB.value = false
   newKBName.value = ''
   newKBDesc.value = ''
+  newKBVisibility.value = 'PUBLIC'
 }
 
 async function handleDeleteKB(kb: WikiKB) {
@@ -178,6 +203,32 @@ watch(() => route.query, () => { consumeQueryNavigation() })
 .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 6px; color: var(--mc-text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
 .form-input { width: 100%; padding: 9px 12px; border: 1px solid var(--mc-border); border-radius: 10px; font-size: 14px; background: var(--mc-bg-muted); color: var(--mc-text-primary); outline: none; font-family: inherit; box-sizing: border-box; transition: border-color 0.15s; }
 .form-input:focus { border-color: var(--mc-primary); box-shadow: 0 0 0 2px rgba(217,119,87,0.1); }
+.scope-options { display: flex; flex-direction: column; gap: 8px; }
+.scope-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--mc-border-light);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.scope-option:hover { border-color: var(--mc-border); }
+.scope-option--active { border-color: var(--mc-primary); background: var(--mc-primary-bg); }
+.scope-option-input { position: absolute; opacity: 0; pointer-events: none; }
+.scope-option-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--mc-border);
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.scope-option--active .scope-option-dot { border-color: var(--mc-primary); box-shadow: inset 0 0 0 3px var(--mc-primary-bg); }
+.scope-option-label { font-size: 13px; font-weight: 600; color: var(--mc-text-primary); }
+.scope-option-hint { margin-left: auto; font-size: 12px; color: var(--mc-text-tertiary); }
 .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
 
 @media (max-width: 980px) {

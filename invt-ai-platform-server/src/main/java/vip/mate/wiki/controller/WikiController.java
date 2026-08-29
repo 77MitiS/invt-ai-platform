@@ -6,10 +6,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import vip.mate.audit.service.AuditEventService;
+import vip.mate.auth.model.UserEntity;
+import vip.mate.auth.service.AuthService;
 import vip.mate.channel.web.Utf8SseEmitter;
 import vip.mate.common.result.R;
 import vip.mate.exception.InvtException;
@@ -56,6 +60,7 @@ public class WikiController {
     private final WikiRawMaterialService rawService;
     private final WikiPageService pageService;
     private final WikiProcessingService processingService;
+    private final AuthService authService;
     private final WikiDirectoryScanService scanService;
     private final WikiLintJobService lintJobService;
     private final WikiProperties properties;
@@ -73,12 +78,12 @@ public class WikiController {
     // ==================== Knowledge Base ====================
 
     @RequireWorkspaceRole("viewer")
-    @Operation(summary = "获取所有知识库")
+    @Operation(summary = "获取当前用户可见的知识库（公共 + 我创建的个人库）")
     @GetMapping("/knowledge-bases")
     public R<List<WikiKnowledgeBaseEntity>> listKBs(
             @RequestHeader(value = "X-Workspace-Id", required = false) Long workspaceId) {
         long wsId = workspaceId != null ? workspaceId : 1L;
-        return R.ok(withLivePageCount(kbService.listByWorkspace(wsId)));
+        return R.ok(withLivePageCount(kbService.listVisibleByWorkspace(wsId, currentUserId())));
     }
 
     @RequireWorkspaceRole("viewer")
@@ -120,6 +125,22 @@ public class WikiController {
         return kb;
     }
 
+    /**
+     * 当前认证用户的 ID；未认证 / 用户不存在时返回 null。
+     * <p>
+     * 用于知识库的"个人/公共"归属：创建时记录 creatorId，列表时仅回显
+     * 他人不可见的私密库。null 不会被当作任何人的私密库（create 走 PUBLIC 默认，
+     * listVisibleByWorkspace 也只放行 PUBLIC），因此不会泄露。
+     */
+    private Long currentUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || "anonymousUser".equals(auth.getPrincipal())) {
+            return null;
+        }
+        UserEntity user = authService.findByUsername(auth.getName());
+        return user != null ? user.getId() : null;
+    }
+
     @RequireWorkspaceRole("viewer")
     @Operation(summary = "按 Agent 获取知识库")
     @GetMapping("/knowledge-bases/agent/{agentId}")
@@ -141,8 +162,9 @@ public class WikiController {
         String name = (String) body.get("name");
         String description = (String) body.get("description");
         Long agentId = body.get("agentId") != null ? Long.valueOf(body.get("agentId").toString()) : null;
+        String visibility = body.get("visibility") instanceof String s ? s : null;
         long wsId = workspaceId != null ? workspaceId : 1L;
-        WikiKnowledgeBaseEntity kb = kbService.create(name, description, agentId, wsId);
+        WikiKnowledgeBaseEntity kb = kbService.create(name, description, agentId, wsId, currentUserId(), visibility);
         return R.ok(kb);
     }
 

@@ -14,6 +14,22 @@
       </button>
     </div>
 
+    <div class="library-tabs mc-surface-card" role="tablist" aria-label="知识库归属范围">
+      <button
+        v-for="tab in tabs"
+        :key="tab.value"
+        type="button"
+        role="tab"
+        class="library-tab"
+        :class="{ 'library-tab--active': activeTab === tab.value }"
+        :aria-selected="activeTab === tab.value"
+        @click="activeTab = tab.value"
+      >
+        {{ tab.label }}
+        <span v-if="tabCount(tab.value)" class="library-tab-count">{{ tabCount(tab.value) }}</span>
+      </button>
+    </div>
+
     <div class="library-toolbar mc-surface-card">
       <div class="library-count">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
@@ -119,13 +135,33 @@ const canManageWiki = computed(() => workspace.can('manage:wiki'))
 const searchInput = ref('')
 type SortMode = 'recent' | 'name' | 'pages'
 const sortInput = ref<SortMode>('recent')
+type TabMode = 'all' | 'personal' | 'public'
+const activeTab = ref<TabMode>('all')
 
 const page = ref(1)
 const size = ref(12)
 
+const tabs = computed(() => [
+  { value: 'all' as const, label: t('wiki.tabAll') },
+  { value: 'personal' as const, label: t('wiki.tabPersonal') },
+  { value: 'public' as const, label: t('wiki.tabPublic') },
+])
+
+// Per-tab count of the fetched set, shown as a small badge on each tab.
+// Legacy rows without a visibility field are treated as public so existing
+// workspace-shared KBs keep appearing under the public tab.
+function tabCount(value: TabMode): number {
+  if (value === 'all') return props.kbs.length
+  if (value === 'personal') return props.kbs.filter(kb => kb.visibility === 'PRIVATE').length
+  return props.kbs.filter(kb => kb.visibility !== 'PRIVATE').length
+}
+
 const filtered = computed<WikiKB[]>(() => {
-  const q = searchInput.value.trim().toLowerCase()
   let list = props.kbs.slice()
+  // Tab filter first, then search narrows within the active tab.
+  if (activeTab.value === 'personal') list = list.filter(kb => kb.visibility === 'PRIVATE')
+  else if (activeTab.value === 'public') list = list.filter(kb => kb.visibility !== 'PRIVATE')
+  const q = searchInput.value.trim().toLowerCase()
   if (q) {
     list = list.filter(kb =>
       kb.name.toLowerCase().includes(q) ||
@@ -146,9 +182,9 @@ const filtered = computed<WikiKB[]>(() => {
   return list
 })
 
-// Reset to page 1 whenever the filtered/sorted set changes shape — otherwise
-// you can land on an out-of-range page after a search.
-watch([searchInput, sortInput], () => { page.value = 1 })
+// Reset to page 1 whenever the filtered/sorted/active-tab set changes shape —
+// otherwise you can land on an out-of-range page after a search or tab switch.
+watch([searchInput, sortInput, activeTab], () => { page.value = 1 })
 watch(() => props.kbs.length, () => { page.value = 1 })
 
 const pageItems = computed(() => {
@@ -170,6 +206,44 @@ const pageItems = computed(() => {
   padding: 10px 14px;
   margin-bottom: 18px;
 }
+.library-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  margin-bottom: 14px;
+}
+.library-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--mc-text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.library-tab:hover { color: var(--mc-text-primary); background: var(--mc-bg-muted); }
+.library-tab--active { color: var(--mc-primary); background: var(--mc-primary-bg); }
+.library-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--mc-text-tertiary);
+  background: var(--mc-bg-sunken);
+  font-variant-numeric: tabular-nums;
+}
+.library-tab--active .library-tab-count { color: var(--mc-primary); background: var(--mc-primary-bg); }
 .library-count {
   display: inline-flex;
   align-items: center;

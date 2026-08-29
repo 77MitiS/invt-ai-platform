@@ -53,6 +53,18 @@ public class WikiKnowledgeBaseEntity {
     private Long workspaceId;
 
     /**
+     * 创建者用户 ID（个人知识库的拥有者）。NULL = 非个人创建，视为公共知识库。
+     * 私密知识库（visibility='PRIVATE'）仅对 creatorId 本人可见。
+     */
+    private Long creatorId;
+
+    /**
+     * 归属范围：PUBLIC（公共/工作区共享） / PRIVATE（个人，仅创建者可见）。
+     * 默认 PUBLIC，以保持旧有行的工作区共享行为。
+     */
+    private String visibility;
+
+    /**
      * 绑定的 Embedding 模型 ID（mate_model_config.id，model_type='embedding'）。
      * <p>
      * NULL = 使用系统默认（mate_system_setting 的 embedding.default.model.id），
