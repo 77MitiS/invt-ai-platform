@@ -94,7 +94,7 @@ defineProps<{
   pointer-events: auto;
 }
 :global(html.dark .mc-toast) {
-  background: rgba(32, 26, 22, 0.86);
+  background: rgba(35, 35, 36, 0.86);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.06) inset,
     0 8px 28px rgba(0, 0, 0, 0.45);

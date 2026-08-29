@@ -225,7 +225,7 @@ async function onEnable(p: ProviderInfo) {
 :global(html.dark .drawer-panel) {
   /* Higher opacity (0.78 vs 0.62) — at high blur the dark page bleed
      made the panel look washed-out grey at 0.62. */
-  background: rgba(32, 26, 22, 0.78);
+  background: rgba(35, 35, 36, 0.78);
   border-left-color: rgba(255, 255, 255, 0.10);
   box-shadow: -24px 0 60px rgba(0, 0, 0, 0.5);
 }
@@ -308,8 +308,8 @@ async function onEnable(p: ProviderInfo) {
 :global(html.dark .drawer-search:focus-within) {
   background: rgba(255, 255, 255, 0.14);
   box-shadow:
-    inset 0 0 0 1px rgba(217, 119, 87, 0.6),
-    0 0 0 3px rgba(217, 119, 87, 0.20);
+    inset 0 0 0 1px rgba(86, 134, 254, 0.6),
+    0 0 0 3px rgba(86, 134, 254, 0.20);
 }
 
 .drawer-search__icon {

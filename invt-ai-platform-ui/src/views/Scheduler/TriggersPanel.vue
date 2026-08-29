@@ -664,7 +664,7 @@ defineExpose({ openCreate })
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
 }
 :global(html.dark) .trigger-modal {
-  background: #1f1713;
+  background: #1B1B1C;
 }
 .trigger-modal-header {
   display: flex;

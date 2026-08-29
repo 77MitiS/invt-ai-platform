@@ -693,7 +693,7 @@ onMounted(loadGrants)
   opacity: 0.55;
 }
 :global(html.dark .rules-table td.col-actions) {
-  background: var(--mc-bg-muted, #1a130e);
+  background: var(--mc-bg-muted, #151517);
   box-shadow: -6px 0 10px -8px rgba(0, 0, 0, 0.4);
 }
 

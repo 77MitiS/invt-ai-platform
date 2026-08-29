@@ -607,7 +607,7 @@ watch(() => workspaceStore.currentWorkspaceId, () => {
 
 :global(html.dark) .app-layout::before {
   background:
-    radial-gradient(circle at top left, rgba(235, 143, 101, 0.14), transparent 24%),
+    radial-gradient(circle at top left, rgba(86, 134, 254, 0.14), transparent 24%),
     radial-gradient(circle at bottom right, rgba(92, 166, 157, 0.08), transparent 20%);
 }
 

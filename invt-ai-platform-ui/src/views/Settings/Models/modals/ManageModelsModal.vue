@@ -230,8 +230,8 @@ defineEmits<{
 }
 
 :global(html.dark) .modal-provider-icon-shell {
-  border-color: rgba(255, 248, 241, 0.28);
-  background: linear-gradient(180deg, #fffdfb, #f3e8dc);
+  border-color: rgba(249, 250, 251, 0.28);
+  background: linear-gradient(180deg, #F9FAFB, #EBEEF2);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.96),
     0 8px 22px rgba(0, 0, 0, 0.26);

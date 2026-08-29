@@ -85,8 +85,8 @@ const busy = computed(() => props.togglingId === props.provider.id)
  * cropping; box-sizing: border-box keeps the cell at 32×32.
  */
 :global(html.dark .catalog-row__icon) {
-  background: linear-gradient(180deg, #ffffff, #f5ede6);
-  border: 1px solid rgba(255, 248, 241, 0.18);
+  background: linear-gradient(180deg, #ffffff, #EBEEF2);
+  border: 1px solid rgba(249, 250, 251, 0.18);
   padding: 3px;
   box-sizing: border-box;
 }

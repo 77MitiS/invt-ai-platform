@@ -443,8 +443,8 @@ html.dark .time-ring::before {
 html.dark .time-ring-warn::before {
   background: radial-gradient(
     circle at center,
-    rgba(235, 143, 101, 0.16) 0%,
-    rgba(235, 143, 101, 0) 72%
+    rgba(86, 134, 254, 0.16) 0%,
+    rgba(86, 134, 254, 0) 72%
   );
 }
 

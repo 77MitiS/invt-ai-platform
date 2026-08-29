@@ -153,123 +153,123 @@
 }
 
 html.dark {
-  /* brand — light blue for dark mode */
-  --mc-primary: #003DA5;
-  --mc-primary-light: #A3D0EE;
-  --mc-primary-hover: #002A7A;
-  --mc-primary-bg: rgba(90, 159, 207, 0.15);
-  --mc-accent: #F08080;
-  --mc-accent-soft: rgba(240, 128, 128, 0.12);
+  /* brand — deepseek blue for dark mode */
+  --mc-primary: #5686FE;
+  --mc-primary-light: #7B9CFF;
+  --mc-primary-hover: #4176E6;
+  --mc-primary-bg: rgba(86, 134, 254, 0.15);
+  --mc-accent: #5686FE;
+  --mc-accent-soft: rgba(86, 134, 254, 0.12);
 
-  /* surfaces — lighter blue-gray */
-  --mc-bg: #1E2233;
-  --mc-bg-elevated: #262B3D;
-  --mc-bg-sunken: #2A3045;
-  --mc-bg-muted: #22273A;
-  --mc-surface-strong: #2D334A;
-  --mc-surface-overlay: rgba(38, 43, 61, 0.85);
-  --mc-panel-top: rgba(38, 43, 61, 0.96);
-  --mc-panel-bottom: rgba(30, 34, 51, 0.94);
-  --mc-panel-raised: rgba(45, 51, 74, 0.9);
+  /* surfaces — bluish charcoal (deepseek neutral-bluish) */
+  --mc-bg: #151517;
+  --mc-bg-elevated: #2C2C2E;
+  --mc-bg-sunken: #232324;
+  --mc-bg-muted: #232324;
+  --mc-surface-strong: #353638;
+  --mc-surface-overlay: rgba(35, 35, 36, 0.85);
+  --mc-panel-top: rgba(44, 44, 46, 0.96);
+  --mc-panel-bottom: rgba(21, 21, 23, 0.94);
+  --mc-panel-raised: rgba(53, 54, 56, 0.9);
 
-  /* borders */
-  --mc-border: #363D58;
-  --mc-border-light: #2D334A;
-  --mc-border-strong: #454D6B;
+  /* borders — soft white alpha */
+  --mc-border: rgba(255, 255, 255, 0.12);
+  --mc-border-light: rgba(255, 255, 255, 0.06);
+  --mc-border-strong: rgba(255, 255, 255, 0.2);
 
   /* text */
-  --mc-text-primary: #E2E6F0;
-  --mc-text-secondary: #A8AFC5;
-  --mc-text-tertiary: #7B8299;
-  --mc-text-inverse: #1A1D27;
+  --mc-text-primary: #F9FAFB;
+  --mc-text-secondary: #CFD3D6;
+  --mc-text-tertiary: #ADB2B8;
+  --mc-text-inverse: #151517;
 
   /* shadows */
-  --mc-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.18);
-  --mc-shadow-medium: 0 14px 40px rgba(0, 0, 0, 0.24);
-  --mc-shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.30);
-  --mc-glow: radial-gradient(circle at top, rgba(126, 184, 224, 0.10), transparent 55%);
+  --mc-shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.30);
+  --mc-shadow-medium: 0 14px 40px rgba(0, 0, 0, 0.36);
+  --mc-shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.42);
+  --mc-glow: radial-gradient(circle at top, rgba(86, 134, 254, 0.10), transparent 55%);
 
   /* sidebar */
-  --mc-sidebar-bg: #22273A;
-  --mc-sidebar-border: #363D58;
-  --mc-sidebar-hover: #2D334A;
-  --mc-sidebar-active: rgba(126, 184, 224, 0.15);
-  --mc-sidebar-text: #A8AFC5;
-  --mc-sidebar-text-active: #7EB8E0;
-  --mc-sidebar-group-title: #7B8299;
-  --mc-sidebar-logo-name: #E2E6F0;
-  --mc-sidebar-footer-bg: rgba(34, 39, 58, 0.95);
-  --mc-sidebar-floating-bg: rgba(38, 43, 61, 0.96);
+  --mc-sidebar-bg: #1B1B1C;
+  --mc-sidebar-border: rgba(255, 255, 255, 0.06);
+  --mc-sidebar-hover: #232324;
+  --mc-sidebar-active: rgba(86, 134, 254, 0.15);
+  --mc-sidebar-text: #CFD3D6;
+  --mc-sidebar-text-active: #5686FE;
+  --mc-sidebar-group-title: #ADB2B8;
+  --mc-sidebar-logo-name: #F9FAFB;
+  --mc-sidebar-footer-bg: rgba(27, 27, 28, 0.95);
+  --mc-sidebar-floating-bg: rgba(35, 35, 36, 0.96);
 
   /* chat */
-  --mc-chat-bg: #1E2233;
-  --mc-chat-header-bg: #262B3D;
-  --mc-assistant-bubble-bg: #262B3D;
-  --mc-assistant-bubble-border: #363D58;
-  --mc-assistant-bubble-color: #E2E6F0;
-  --mc-user-bubble-bg: #5A9FCF;
-  --mc-user-bubble-color: #ffffff;
-  --mc-input-bg: #22273A;
-  --mc-input-border: #363D58;
-  --mc-input-text: #E2E6F0;
+  --mc-chat-bg: #151517;
+  --mc-chat-header-bg: #232324;
+  --mc-assistant-bubble-bg: #232324;
+  --mc-assistant-bubble-border: #3A3A3C;
+  --mc-assistant-bubble-color: #F9FAFB;
+  --mc-user-bubble-bg: #4176E6;
+  --mc-user-bubble-color: #F9FAFB;
+  --mc-input-bg: #232324;
+  --mc-input-border: #3A3A3C;
+  --mc-input-text: #F9FAFB;
 
-  /* code blocks — dark mode: deep brown bg, soft text */
-  --mc-code-bg: #161210;
-  --mc-code-header-bg: #1E1814;
+  /* code blocks — bluish charcoal, soft text */
+  --mc-code-bg: #1B1B1C;
+  --mc-code-header-bg: #232324;
   --mc-code-header-border: rgba(255, 255, 255, 0.06);
-  --mc-code-lang-color: #8A7060;
-  --mc-code-copy-color: #8A7060;
+  --mc-code-lang-color: #ADB2B8;
+  --mc-code-copy-color: #ADB2B8;
   --mc-code-copy-hover-bg: rgba(255, 255, 255, 0.08);
-  --mc-code-copy-hover-color: #F0EAE4;
+  --mc-code-copy-hover-color: #F9FAFB;
   --mc-code-text: #abb2bf;
   --mc-code-shadow: rgba(0, 0, 0, 0.2);
 
   /* inline code */
-  --mc-inline-code-bg: rgba(224, 136, 96, 0.15);
-  --mc-inline-code-color: #F0C4A0;
+  --mc-inline-code-bg: rgba(86, 134, 254, 0.15);
+  --mc-inline-code-color: #BFD4FE;
 
   /* markdown */
-  --mc-table-header-bg: #2E2420;
-  --mc-table-border: #3D3028;
-  --mc-blockquote-bg: rgba(224, 136, 96, 0.08);
-  --mc-blockquote-border: #D97757;
-  --mc-blockquote-color: #C4A898;
-  --mc-link-color: #E08860;
-  --mc-hr-color: #3D3028;
+  --mc-table-header-bg: #232324;
+  --mc-table-border: rgba(255, 255, 255, 0.12);
+  --mc-blockquote-bg: rgba(86, 134, 254, 0.08);
+  --mc-blockquote-border: #5686FE;
+  --mc-blockquote-color: #ADB2B8;
+  --mc-link-color: #5686FE;
+  --mc-hr-color: rgba(255, 255, 255, 0.12);
 
   /* misc */
-  --mc-tool-call-bg: rgba(250, 204, 21, 0.1);
-  --mc-tool-call-border: rgba(250, 204, 21, 0.2);
-  --mc-tool-call-color: #fbbf24;
-  --mc-attachment-bg: rgba(224, 136, 96, 0.12);
-  --mc-attachment-border: rgba(224, 136, 96, 0.25);
-  --mc-attachment-color: #F0C4A0;
-  --mc-thinking-bg: #231C17;
-  --mc-thinking-text: #C4A898;
-  --mc-mermaid-bg: #1A1410;
-  --mc-mermaid-border: #3D3028;
-  --mc-code-line-number: rgba(138, 112, 96, 0.95);
-  --mc-thinking-hover: rgba(224, 136, 96, 0.1);
-  --mc-thinking-icon-bg: rgba(224, 136, 96, 0.12);
-  --mc-thinking-border: rgba(224, 136, 96, 0.2);
-  --mc-danger: #E05A4A;
-  --mc-danger-bg: rgba(224, 90, 74, 0.15);
-  --mc-danger-border: rgba(224, 90, 74, 0.4);
-  --mc-danger-hover: #c94a3a;
-  --mc-success: #7AB87A;
-  --mc-warning: #fbbf24;
-  --mc-warning-hover: #f59e0b;
-  --mc-info: #60a5fa;
+  --mc-tool-call-bg: rgba(86, 134, 254, 0.1);
+  --mc-tool-call-border: rgba(86, 134, 254, 0.2);
+  --mc-tool-call-color: #5686FE;
+  --mc-attachment-bg: rgba(86, 134, 254, 0.12);
+  --mc-attachment-border: rgba(86, 134, 254, 0.25);
+  --mc-attachment-color: #BFD4FE;
+  --mc-thinking-bg: #232324;
+  --mc-thinking-text: #CFD3D6;
+  --mc-mermaid-bg: #1B1B1C;
+  --mc-mermaid-border: rgba(255, 255, 255, 0.12);
+  --mc-code-line-number: rgba(255, 255, 255, 0.4);
+  --mc-thinking-hover: rgba(86, 134, 254, 0.1);
+  --mc-thinking-icon-bg: rgba(86, 134, 254, 0.12);
+  --mc-thinking-border: rgba(86, 134, 254, 0.2);
+  --mc-danger: #F25A5A;
+  --mc-danger-bg: rgba(242, 90, 90, 0.15);
+  --mc-danger-border: rgba(242, 90, 90, 0.4);
+  --mc-danger-hover: #EC1313;
+  --mc-success: #22C55E;
+  --mc-warning: #F7AD31;
+  --mc-warning-hover: #F59E0B;
+  --mc-info: #60A5FA;
 
   /* scrollbar */
-  --mc-scrollbar-thumb: #5A4438;
-  --mc-scrollbar-thumb-hover: #7A6050;
+  --mc-scrollbar-thumb: #3A3A3C;
+  --mc-scrollbar-thumb-hover: #4A4A4C;
 
   /* workflow canvas — darker dots + softer edge color so they read on
      the dark background without overpowering the node card. */
   --mc-canvas-dot: rgba(255, 255, 255, 0.14);
-  --mc-edge: #5a4a3e;
-  --mc-edge-strong: #8c7361;
+  --mc-edge: #4A4A4C;
+  --mc-edge-strong: #6E6E70;
 
   color-scheme: dark;
 }
@@ -361,8 +361,8 @@ body {
 
 html.dark body {
   background-image:
-    radial-gradient(circle at top left, rgba(235, 143, 101, 0.14), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(92, 166, 157, 0.08), transparent 26%);
+    radial-gradient(circle at top left, rgba(86, 134, 254, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(86, 134, 254, 0.05), transparent 26%);
 }
 
 body::before {
@@ -851,7 +851,7 @@ body.workflow-canvas-fullscreen .mc-page-frame::before {
 }
 
 html.dark .mc-surface-card {
-  background: linear-gradient(180deg, rgba(42, 32, 26, 0.86), rgba(34, 26, 22, 0.96));
+  background: linear-gradient(180deg, rgba(44, 44, 46, 0.86), rgba(21, 21, 23, 0.96));
 }
 
 @media (max-width: 768px) {
@@ -995,20 +995,20 @@ html.dark .hljs-deletion { color: #e06c75; background: rgba(224, 108, 117, 0.1);
    Element Plus dark mode override
    ================================================================ */
 html.dark {
-  --el-bg-color: #231C17;
-  --el-bg-color-overlay: #2E2420;
-  --el-bg-color-page: #1A1410;
-  --el-text-color-primary: #F0EAE4;
-  --el-text-color-regular: #D0B8A8;
-  --el-text-color-secondary: #C4A898;
-  --el-text-color-placeholder: #8A7060;
-  --el-border-color: #3D3028;
-  --el-border-color-light: #2E2420;
-  --el-border-color-lighter: #261E18;
-  --el-fill-color-blank: #231C17;
-  --el-fill-color: #2E2420;
-  --el-fill-color-light: #2A211C;
-  --el-fill-color-lighter: #231C17;
-  --el-color-primary: #E08860;
+  --el-bg-color: #232324;
+  --el-bg-color-overlay: #2C2C2E;
+  --el-bg-color-page: #151517;
+  --el-text-color-primary: #F9FAFB;
+  --el-text-color-regular: #CFD3D6;
+  --el-text-color-secondary: #ADB2B8;
+  --el-text-color-placeholder: #6E6E70;
+  --el-border-color: #3A3A3C;
+  --el-border-color-light: #2C2C2E;
+  --el-border-color-lighter: #232324;
+  --el-fill-color-blank: #2C2C2E;
+  --el-fill-color: #353638;
+  --el-fill-color-light: #2C2C2E;
+  --el-fill-color-lighter: #232324;
+  --el-color-primary: #5686FE;
   --el-mask-color: rgba(0, 0, 0, 0.6);
 }

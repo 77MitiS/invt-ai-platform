@@ -241,7 +241,7 @@ html.dark .exec-detail-overlay {
   background: rgba(0, 0, 0, 0.42) !important;
 }
 html.dark .exec-detail-dialog.el-dialog {
-  background: rgba(34, 27, 23, 0.6);
+  background: rgba(35, 35, 36, 0.6);
   border-color: rgba(255, 255, 255, 0.08);
   box-shadow: 0 16px 56px rgba(0, 0, 0, 0.55);
 }

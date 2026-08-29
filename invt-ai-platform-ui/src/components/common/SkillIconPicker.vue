@@ -292,7 +292,7 @@ function onApply() {
   overflow: hidden;
 }
 :global(html.dark .mc-picker-panel) {
-  background: rgba(32, 26, 22, 0.86);
+  background: rgba(35, 35, 36, 0.86);
   border-color: rgba(255, 255, 255, 0.10);
   box-shadow:
     0 24px 60px rgba(0, 0, 0, 0.6),

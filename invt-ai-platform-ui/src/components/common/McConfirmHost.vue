@@ -119,7 +119,7 @@ function onCancel() {
   animation: mc-confirm-pop 0.28s cubic-bezier(0.32, 0.72, 0, 1.2);
 }
 :global(html.dark .mc-confirm-panel) {
-  background: rgba(32, 26, 22, 0.88);
+  background: rgba(35, 35, 36, 0.88);
   border-color: rgba(255, 255, 255, 0.10);
   box-shadow:
     0 24px 60px rgba(0, 0, 0, 0.6),
