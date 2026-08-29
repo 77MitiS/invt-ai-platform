@@ -9,14 +9,13 @@
     <aside class="sidebar" :class="{ collapsed: sidebarCollapsed && !isMobile, 'mobile-open': mobileMenuOpen }">
       <!-- Logo -->
       <div class="sidebar-logo">
-        <div class="logo-icon">
-          <img src="/logo/invt_logo.png" alt="INVT AI Platform" class="logo-img" />
+        <div class="logo-icon logo-icon--img">
+          <img
+            :src="effectiveCollapsed ? '/logo/invt-logo-nocn.png' : '/logo/invt-logo.png'"
+            alt="INVT"
+            class="logo-img"
+          />
         </div>
-        <transition name="fade">
-          <div v-if="!effectiveCollapsed" class="logo-text">
-            <span class="logo-name">英威腾<span class="logo-name-highlight"> AI Studio</span></span>
-          </div>
-        </transition>
         <button
           class="collapse-btn"
           :title="sidebarToggleLabel"
@@ -181,7 +180,7 @@
             <line x1="3" y1="18" x2="21" y2="18"/>
           </svg>
         </button>
-        <span class="mobile-topbar-title">英威腾<span class="logo-name-highlight"> AI Studio</span></span>
+        <span class="mobile-topbar-title">英威腾 AI Studio</span>
       </div>
       <!-- RFC-074 PR-1 fix: include route.path in the key so two different
            keepAlive routes (e.g. /channels and /settings/models) don't collide
@@ -667,29 +666,38 @@ watch(() => workspaceStore.currentWorkspaceId, () => {
   flex-shrink: 0;
 }
 
-.logo-img {
-  width: 44px;
-  height: 44px;
+/* 图片 logo：展开态完整版(154:32)，折叠态无中文版(75:32)，均按各自比例显示 */
+.logo-icon--img {
+  width: 106px;   /* 154:32 × 22 高 ≈ 106 宽，更协调 */
+  height: 22px;
+  flex-shrink: 0;
+}
+.logo-icon--img .logo-img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  display: block;
+}
+/* 折叠态：侧边栏内容区约 54px，用无中文版(75:32)按比例缩小 */
+.sidebar.collapsed .logo-icon--img {
+  width: 50px;
+  height: 21px;
+}
+
+/* 文字版 logo（无图片） */
+.logo-icon--text {
+  background: linear-gradient(135deg, #007FCC, #0052A2);
+  border-radius: 10px;
+}
+.logo-initial {
+  font-size: 12px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.06em;
+  line-height: 1;
 }
 
 .logo-emoji { font-size: 16px; }
-
-.logo-text { flex: 1; overflow: hidden; }
-
-.logo-name {
-  display: block;
-  font-size: 16px;
-  font-weight: 800;
-  color: #007FCC;
-  white-space: nowrap;
-  letter-spacing: -0.03em;
-}
-
-.logo-name-highlight {
-  color: #1A1A2E;
-  font-weight: 800;
-}
 
 .logo-version {
   display: block;
