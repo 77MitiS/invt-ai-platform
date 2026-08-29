@@ -431,6 +431,12 @@ public class ModelProviderService {
         List<ModelInfoDTO> extraModels = new ArrayList<>();
         if (models != null) {
             for (ModelConfigEntity model : models) {
+                // Only expose enabled models to chat/model selectors — disabled
+                // model rows (turned off in the admin UI) must not appear as
+                // callable options in the agent editor / conversation picker.
+                if (!Boolean.TRUE.equals(model.getEnabled())) {
+                    continue;
+                }
                 // RFC-049 PR-1-UI: ModelInfoDTO(id, name) derives supportsReasoningEffort
                 // from id via ModelFamily — no extra wiring needed here.
                 ModelInfoDTO info = new ModelInfoDTO(model.getModelName(), model.getName());

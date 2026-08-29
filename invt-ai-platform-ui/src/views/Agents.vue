@@ -922,8 +922,11 @@ function setPrimaryKb(id: string | number) {
 const availableProviders = ref<{ id: string; name: string }[]>([])
 const selectedProviderIds = ref<string[]>([])
 // RFC-03 Lane G1: per-Agent model override picker — populated from the
-// global enabled-models list, blank value means "fall back to default".
-const availableModels = ref<Array<{ id: number; name: string; provider: string; modelName: string }>>([])
+// configured (API key present) chat providers only, blank value means
+// "fall back to default". /models/enabled returns the full enabled catalog
+// (~176 rows across unconfigured providers), which is noise for this picker;
+// /models/chat-providers only lists providers whose auth is CONFIGURED.
+const availableModels = ref<Array<{ id: number | string; name: string; provider: string; modelName: string }>>([])
 
 // Template selector state
 const showTemplateSelector = ref(false)
@@ -1225,13 +1228,22 @@ async function loadAgents() {
 
 async function loadAvailableModels() {
   try {
-    const res: any = await modelApi.listEnabled()
-    availableModels.value = (res.data || []).map((m: any) => ({
-      id: m.id,
-      name: m.name,
-      provider: m.provider,
-      modelName: m.modelName,
-    }))
+    // /models/chat-providers is viewer-accessible and returns providers whose
+    // auth is CONFIGURED (api key present). `available` is true only when the
+    // provider is LIVE (configured + healthy) and has at least one enabled
+    // model — flattening only those keeps the dropdown to models the
+    // deployment can actually call, instead of the full catalog.
+    const res: any = await modelApi.listProviders()
+    availableModels.value = (res.data || [])
+      .filter((p: any) => p.available === true)
+      .flatMap((p: any) =>
+        [...(p.models || []), ...(p.extraModels || [])].map((m: any) => ({
+          id: m.id,
+          name: m.name,
+          provider: p.id,
+          modelName: m.id,
+        })),
+      )
   } catch {
     // Silent — the picker still works (empty list = only "default" option).
   }
