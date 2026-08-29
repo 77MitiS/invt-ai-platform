@@ -187,8 +187,9 @@ async function handleLogin() {
 /* ===== 浮动登录卡片（右侧偏上区域） ===== */
 .login-panel {
   position: absolute;
-  top: 18%;
-  right: 12%;
+  top: 22%;
+  right: 22%;
+  transform: translateY(-50%);
   width: 400px;
   max-width: calc(100vw - 48px);
   background: rgba(255, 255, 255, 0.92);
@@ -412,7 +413,7 @@ async function handleLogin() {
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; }
   to { opacity: 1; transform: translateY(0); }
 }
 
